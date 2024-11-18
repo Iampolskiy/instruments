@@ -1,10 +1,9 @@
 import React from "react";
+import Link from "next/link";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
-import type { Metadata } from "next";
-import Link from "next/link";
-
 import { instrumentConverter } from "@/converter/instrumentConverter";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "My Instruments",
@@ -26,9 +25,9 @@ export default async function instrumentsPage() {
         Music Instruments
       </h2>
       {instruments.map((instrument) => (
-        <li key={instrument.id} className="mb-5">
-          <Link href={`/instrument/${instrument.id}`}>
-            {instrument.name} -{instrument.price}
+        <li className="mb-5 list-none" key={instrument.id}>
+          <Link className="inline-block" href={`/instruments/${instrument.id}`}>
+            <div className="text-3xl">{instrument.name}</div>
           </Link>
         </li>
       ))}
