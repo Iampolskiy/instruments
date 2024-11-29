@@ -1,9 +1,10 @@
 import React from "react";
-import Link from "next/link";
-import { collection, getDocs, query, orderBy } from "firebase/firestore";
+
+import { collection, getDocs, query } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
 import { instrumentConverter } from "@/converter/instrumentConverter";
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "My Instruments",
@@ -11,10 +12,10 @@ export const metadata: Metadata = {
 };
 
 export default async function instrumentsPage() {
-  const instrumentsRef = collection(db, "Instruments").withConverter(
+  const instrumentsRef = collection(db, "Categories").withConverter(
     instrumentConverter
   );
-  const instrumentsQuery = query(instrumentsRef, orderBy("id", "asc"));
+  const instrumentsQuery = query(instrumentsRef);
   const querySnapshot = await getDocs(instrumentsQuery);
 
   const instruments = querySnapshot.docs.map((doc) => doc.data());
@@ -25,10 +26,16 @@ export default async function instrumentsPage() {
         Music Instruments
       </h2>
       {instruments.map((instrument) => (
-        <li className="mb-5 list-none" key={instrument.id}>
-          <Link className="inline-block" href={`/instruments/${instrument.id}`}>
-            <div className="text-3xl">{instrument.name}</div>
-          </Link>
+        <li className="mb-5 list-none" key={instrument.name}>
+          <p>{instrument.name}</p>
+
+          <Image
+            className="mx-auto"
+            src={instrument.image ?? ""}
+            width={40}
+            height={40}
+            alt="Instrument"
+          />
         </li>
       ))}
     </main>
