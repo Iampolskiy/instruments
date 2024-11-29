@@ -27,25 +27,29 @@ export default async function instrumentsPage() {
   console.log(instruments);
 
   return (
-    <main className="text-center pt-32 px-5">
-      <h2 className="text-4xl md:text-5xl font-bold mb-16">Categories</h2>
-      {instruments.map((instrument) => (
-        <Link
-          href={`/${instrument.name}`}
-          className="mb-5"
-          key={instrument.name}
-        >
-          <p>{instrument.name}</p>
+    <main className=" pt-32 px-5">
+      <h2 className="text-center text-4xl md:text-5xl font-bold mb-16">
+        Categories
+      </h2>
+      <div className="flex flex-row justify-center flex-wrap gap-5">
+        {instruments.map((instrument) => (
+          <Link
+            className=" mb-5 border border-zinc-400 rounded-lg p-5"
+            href={`/${instrument.name}`}
+            key={instrument.name}
+          >
+            <p>{instrument.name}</p>
 
-          <Image
-            className="mx-auto w-[80px] h-[80px]"
-            src={instrument.image ?? ""}
-            width="120"
-            height="120"
-            alt="Instrument"
-          />
-        </Link>
-      ))}
+            <Image
+              className="w-[120px] h-[120px]"
+              src={instrument.image ?? ""}
+              width="120"
+              height="120"
+              alt="Instrument"
+            />
+          </Link>
+        ))}
+      </div>
     </main>
   );
 }

@@ -1,6 +1,7 @@
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "@/config/firebase.config";
 import Link from "next/link";
+import Image from "next/image";
 
 type Params = {
   name: string;
@@ -18,12 +19,11 @@ export default async function accordion({ params }: { params: Params }) {
   return (
     <>
       <h4 className="text-4xl md:text-5xl mb-16 mx-auto">{params.name}</h4>
-      <h3>{params.name}</h3>
-      <div>
+
+      <div className="mx-auto ">
         {data.map((name, index) => (
           <Link href={name.image} key={index}>
-            {name.name}
-            {name.image}
+            <Image src={name.image} width={160} height={160} alt="Instrument" />
           </Link>
         ))}
       </div>
